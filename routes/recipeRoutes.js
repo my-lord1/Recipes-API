@@ -8,13 +8,16 @@ const {
   deleteRecipe
 } = require('../controllers/recipeController');
 
+const validate = require('../middleware/validate');
+const { recipeSchema } = require('../validators/recipeValidator');
+
 router.route('/')
-  .post(createRecipe)
+  .post(validate(recipeSchema), createRecipe) 
   .get(getAllRecipes);
 
 router.route('/:id')
   .get(getRecipeById)
-  .put(updateRecipe)
+  .put(validate(recipeSchema), updateRecipe) 
   .delete(deleteRecipe);
 
 module.exports = router;
